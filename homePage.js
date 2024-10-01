@@ -28,21 +28,26 @@ const firebaseConfig = {
     appId: "1:786902861892:web:5a7e98db05c43f6e7cd411"
 };
 
-// Initialize Firebase
+// Initialize Firebase with the configuration object
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
 
+// Reference to the Firestore database
+const db = firebase.firestore();
 const classroomFormDB = db.collection("Classrooms");
 
+// Handle form submission for adding a classroom
 document.getElementById('classroomAddForm').addEventListener('submit', submitForm);
 
 function submitForm(e) {
     e.preventDefault();
 
+// Get input values from the form fields
+
     const preSchool = document.getElementById('preSchool').value;
     const sectionName = document.getElementById('sectionName').value;
     const schedule = document.getElementById('schedule').value;
 
+// Check if all fields are filled out
     if(preSchool && sectionName && schedule) {
         saveMessages(preSchool, sectionName, schedule);
     }
@@ -51,7 +56,7 @@ function submitForm(e) {
         alert("Please fill out all fields!");
     }
 }
-
+// Save classroom data to the Firestore database
 const saveMessages = (preSchool, sectionName, schedule) => {
     classroomFormDB.add({
         preSchool: preSchool,
@@ -59,7 +64,7 @@ const saveMessages = (preSchool, sectionName, schedule) => {
         schedule: schedule
     })
     .then (() => {
-        alert("Classroom added successfully!");
+        alert("Classroom added successfully!");    // Show success message and close form
 
         document.getElementById('classroomForm').classList.remove("show");
         document.getElementById("overlay").classList.remove("show");
@@ -67,18 +72,19 @@ const saveMessages = (preSchool, sectionName, schedule) => {
         displayClassrooms();
     })
     .catch ((error) => {
-        alert("Error adding classroom. Please try again.");
+        alert("Error adding classroom. Please try again.");   // Show an error message if adding fails
     });  
 };
-
+// Display the list of classrooms
 function displayClassrooms() {
     const container = document.getElementById('classroomList');
     container.innerHTML = '';
     console.log('Displaying classroos...');
 
+// Fetch all classroom documents from Firestore
     classroomFormDB.get().then((snapshot) => {
         console.log('Snapshot:', snapshot);
-        if (snapshot.empty) {
+        if (snapshot.empty) {                   // Check if there are any classrooms
             console.log('No matching document.');
         }
         snapshot.forEach((doc) => {
@@ -88,6 +94,7 @@ function displayClassrooms() {
             const classroomElement = document.createElement('div');
             classroomElement.className = 'red-BG-Board';
 
+// Set wallpaper based on the preSchool value
             let wallpaperSrc = '';
             if (data.preSchool === 'Nursery 1'){
                 wallpaperSrc = '/assets/greenwallpaper.png';
@@ -97,7 +104,7 @@ function displayClassrooms() {
                 wallpaperSrc = '/assets/pinkwallpaper.png';
             }
 
-            // Set the inner HTML
+// Set the inner HTML
             classroomElement.innerHTML = `
                 <img class="pinkwall" src="${wallpaperSrc}">
                 <p class="class-textTop"><strong>Level:</strong> ${data.preSchool}</p>
@@ -112,6 +119,7 @@ function displayClassrooms() {
     });
 }
 
+// Delete a classroom by its ID
 function deleteClassroom(id) {
     console.log("Deleting document with ID: ", id); // Debugging log
 
@@ -125,4 +133,5 @@ function deleteClassroom(id) {
         });
     }
 }
+// Display classrooms when the page loads
 window.onload = displayClassrooms;

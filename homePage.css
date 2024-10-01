@@ -178,6 +178,7 @@ footer {
     bottom: 0;
     left: 0; /* Align to the left */
     width: 100%; /* Full width */
+    height: 30px;
     display: flex; /* Use flexbox for footer content alignment */
     align-items: center; /* Center items vertically */
     justify-content: center; /* Center items horizontally */
@@ -213,13 +214,13 @@ footer {
 .classroomContainer {
     position: fixed;
     background: #ffffff;
-    width: 360px;
-    max-width: 90%;
+    width: 360px;  /* Base width for larger screens */
+    max-width: 90%;  /* Ensure it doesn't exceed 90% of the viewport width */
     top: 300px;
-    left: 40%;
-    right: 60%;
+    left: 50%;
+    transform: translateX(-50%);  /* Center horizontally */
     border-radius: 10px;
-    display: none; /* Hidden by default */
+    display: none;  /* Hidden by default */
     justify-content: center;
     align-items: center;
     transition: 0.3s ease;
@@ -376,6 +377,16 @@ form h2 {
         font-size: 14px; /* Slightly smaller font size */
         padding: 20px; /* Adjust padding */
     }
+
+    .classroom {
+        margin-top: 120px;
+        padding: 0 30px; /* Adjust padding */
+        margin-right: 30px;
+    }
+
+    .container {
+        padding: 0px 90px; /* Reduce container padding for better fit */
+    }
 }
 
 @media (max-width: 768px) {
@@ -441,11 +452,57 @@ form h2 {
     }
 
     .classroom h1 {
-        padding-top: 100px;
-        padding-left: 24px;
         font-size: 25px;
         font-family: "Lato-Black", Helvetica;
         font-weight: 900;
         color: #1e2772;
+    }
+
+    .classroom button {
+        cursor: pointer;
+        margin-right: 38px;
+        background-color: #c8def5; /* Light blue color for the button */
+        padding: 4px 5px; /* Adjust padding for a balanced button size */
+        border-radius: 5px;
+        color: rgb(75, 70, 70);
+        font-size: 14px;
+        border: none;
+        display: flex; /* Use Flexbox for aligning text and image */
+        justify-content: center; /* Center content horizontally */
+        align-items: center; /* Center content vertically */
+        transition: background-color 0.3s ease; /* Smooth hover transition */
+    }
+    
+    .classroom button:hover {
+        box-shadow: 0 4px 15px rgba(80, 80, 80, 0.3);
+    }
+    
+    .classroom button img {
+        margin-bottom: 1px;
+        width: 20px;
+        height: auto;
+    }
+
+    .container {
+        padding: 0px 5px; /* Reduce container padding for mobile */
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust grid columns */
+    }
+
+    .classroom h1 {
+        font-size: 24px; /* Smaller font for mobile */
+    }
+
+    .red-BG-Board {
+        height: auto;
+        width: 720px;
+    }
+
+    .classroomContainer {
+        width: 280px;  /* Reduce width for mobile screens */
+        height: 405px;
+        padding: 20px;  /* Reduce padding */
+        top: 50%;       /* Center vertically */
+        left: 50%;      /* Center horizontally */
+        transform: translate(-50%, -50%);  /* Move form to the center */
     }
 }
